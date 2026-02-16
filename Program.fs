@@ -20,6 +20,29 @@ let sharedSqlite db =
     let compiler = SqlKata.Compilers.SqliteCompiler()
     ContextType.Shared(new QueryContext(db, compiler))
 
+let insertThenRetrieveDateTime =
+    async {
+        use! db = openSqlite
+
+        let ctx = sharedSqlite db
+
+        let! _ =
+            insertAsync ctx {
+                into dbo.SqliteDateTime2Test
+                entity { dt = System.DateTime(2024, 6, 20, 8, 0, 0) }
+            }
+
+        let! results =
+            selectAsync ctx {
+                for row in dbo.SqliteDateTime2Test do
+                    toArray
+            }
+
+        printfn $"Got %O{results[0].dt} from the DateTime2 test"
+
+        return ()
+    }
+
 let insertThenRetrieveDate =
     async {
         use! db = openSqlite
@@ -38,7 +61,7 @@ let insertThenRetrieveDate =
                     toArray
             }
 
-        printfn $"Got %i{results.Length} results"
+        printfn $"Got %O{results[0].date} from the Date test"
 
         return ()
     }
@@ -47,6 +70,7 @@ let insertThenRetrieveDate =
 let main _ =
     Async.RunSynchronously
     <| async {
+        do! insertThenRetrieveDateTime
         do! insertThenRetrieveDate
         return 0
     }

@@ -1,5 +1,5 @@
 [general]
-connection = "Server=server;Database=db_781c8430_468a_421d_a0d5_106096079d69;TrustServerCertificate=True"
+connection = "Server=server;Database=db_38f4f774_6a12_4f37_a869_ea52ccde464f;TrustServerCertificate=True"
 output = "Schema.fs"
 namespace = "SqlHydraForSqlite"
 cli_mutable = true

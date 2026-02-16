@@ -18,6 +18,13 @@ module dbo =
 
     let SqliteDateTest = table<SqliteDateTest>
 
+    [<CLIMutable>]
+    type SqliteDateTime2Test =
+        { [<ProviderDbType("DateTime2")>]
+          dt: System.DateTime }
+
+    let SqliteDateTime2Test = table<SqliteDateTime2Test>
+
 
 [<System.Obsolete("The HydraReader module is no longer needed and will be removed in v4.0.")>]
 type HydraReader =
